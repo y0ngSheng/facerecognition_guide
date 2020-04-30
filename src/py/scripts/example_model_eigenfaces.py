@@ -14,8 +14,14 @@ if __name__ == '__main__':
         sys.exit()
     
     # read images
-    [X,y] = read_images(sys.argv[1])
+    [X,y,X_test,y_test] = read_images(sys.argv[1])
     # compute the eigenfaces model
-    model = EigenfacesModel(X[1:], y[1:])
+    model = EigenfacesModel(X[0:], y[0:])
     # get a prediction for the first observation
-    print "expected =", y[0], "/", "predicted =", model.predict(X[0])
+    #print "expected =", y[0], "/", "predicted =", model.predict(X[0])
+    k=0
+    for i in range(len(X_test)):
+        predicted=model.predict(X_test[i])
+        if(y_test[i]==predicted):
+            k=k+1
+    print("accuracy is ",k/len(X_test))
