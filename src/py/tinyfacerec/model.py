@@ -20,7 +20,7 @@ class BaseModel(object):
 		minDist = np.finfo('float').max
 		minClass = -1
 		Q = project(self.W, X.reshape(1,-1), self.mu)
-		for i in xrange(len(self.projections)):
+		for i in range(len(self.projections)):
 			dist = self.dist_metric(self.projections[i], Q)
 			if dist < minDist:
 				minDist = dist
