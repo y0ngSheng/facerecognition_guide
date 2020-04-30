@@ -18,9 +18,11 @@ def normalize(X, low, high, dtype=None):
 def read_images(path, sz=None):
 	c = 0
 	X,y = [], []
+	X_test,y_test = [],[]
 	for dirname, dirnames, filenames in os.walk(path):
 		for subdirname in dirnames:
 			subject_path = os.path.join(dirname, subdirname)
+			k=0
 			for filename in os.listdir(subject_path):
 				try:
 					im = Image.open(os.path.join(subject_path, filename))
@@ -28,15 +30,21 @@ def read_images(path, sz=None):
 					# resize to given size (if given)
 					if (sz is not None):
 						im = im.resize(sz, Image.ANTIALIAS)
-					X.append(np.asarray(im, dtype=np.uint8))
-					y.append(c)
+					if(k<16):
+						X.append(np.asarray(im, dtype=np.uint8))
+						y.append(c)
+						k=k+1
+					else:
+						X_test.append(np.asarray(im,dtype=np.uint8))
+						y_test.append(c)
+						k=k+1
 				except IOError:
 					print "I/O error({0}): {1}".format(errno, strerror)
 				except:
 					print "Unexpected error:", sys.exc_info()[0]
 					raise
 			c = c+1
-	return [X,y]
+	return [X,y,X_test,y_test]
 
 def asRowMatrix(X):
 	if len(X) == 0:
