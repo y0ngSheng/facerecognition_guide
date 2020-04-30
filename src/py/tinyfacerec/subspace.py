@@ -23,7 +23,7 @@ def pca(X, y, num_components=0):
 		C = np.dot(X,X.T)
 		[eigenvalues,eigenvectors] = np.linalg.eigh(C)
 		eigenvectors = np.dot(X.T,eigenvectors)
-		for i in xrange(n):
+		for i in range(n):
 			eigenvectors[:,i] = eigenvectors[:,i]/np.linalg.norm(eigenvectors[:,i])
 	# or simply perform an economy size decomposition
 	# eigenvectors, eigenvalues, variance = np.linalg.svd(X.T, full_matrices=False)
